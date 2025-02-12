@@ -1,5 +1,6 @@
 package uce.edu.ec.service;
 
+import java.util.List;
 import java.util.function.Function;
 
 import jakarta.enterprise.context.ApplicationScoped;
@@ -46,4 +47,25 @@ public class EstudianteServiceImpl implements IEstudianteService {
         persona.setCorreo(p.getCorreo());
         return persona;
     };
+    @Override
+    public List<EstudianteTo> listaTodos() {
+        List<Estudiante> lista = this.estudianteRepository.listaTodos();
+        for (Estudiante p : lista) {
+            System.out.println(p);
+        }
+        return lista.stream().map(this.mapTo).toList();
+    }
+
+    @Override
+    public List<EstudianteTo> listaPorNombre(String nombre) {
+        List<Estudiante> lista = this.estudianteRepository.listaPorNombre(nombre);
+        return lista.stream().map(this.mapTo).toList();
+
+    }
+
+    @Override
+    public List<EstudianteTo> listaPorNombreApellido(String nombre, String apellido) {
+        List<Estudiante> lista = this.estudianteRepository.listaPorNombreApellido(nombre, apellido);
+        return lista.stream().map(this.mapTo).toList();
+    }
 }
